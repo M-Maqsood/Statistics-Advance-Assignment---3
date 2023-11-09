@@ -1,0 +1,311 @@
+Q1: What is Estimation Statistics? Explain point estimate and interval estimate.
+Estimation statistics is a branch of statistics that deals with estimating unknown parameters or characteristics of a population based on sample data.
+
+A point estimate is a single value that is used to estimate an unknown population parameter. This value is calculated using a sample statistic, such as the sample mean or sample proportion. For example, if we want to estimate the population mean weight of all college students, we could take a sample of students and calculate the sample mean weight. This sample mean weight would be the point estimate for the population mean weight.
+
+Interval estimate, also known as confidence interval, is a range of values that is likely to contain the true population parameter with a certain level of confidence. This range is calculated using the sample data and a margin of error, which takes into account the variability of the sample data and the sample size. For example, we might calculate a 95% confidence interval for the population mean weight of all college students. This interval would be calculated using the sample mean weight, the sample standard deviation, and the sample size. The interval would give us a range of values that we can be 95% confident contains the true population mean weight.
+
+Q2. Write a Python function to estimate the population mean using a sample mean and standard deviation.
+
+def population_mean(sample_mean, sample_std_dev, sample_size):
+    import math
+    std_error = sample_std_dev / math.sqrt(sample_size)
+    margin_of_error = 1.96 * std_error  # 1.96 is the z-score for a 95% confidence level
+    lower_bound = sample_mean - margin_of_error
+    upper_bound = sample_mean + margin_of_error
+    return (lower_bound, upper_bound)
+
+     
+
+sample_mean = 25.6
+sample_std_dev = 4.2
+sample_size = 100
+
+result = population_mean(sample_mean, sample_std_dev, sample_size)
+
+print("The population mean is estimated to be between", result[0], "and", result[1], "with 95% confidence.")
+
+     
+The population mean is estimated to be between 24.7768 and 26.4232 with 95% confidence.
+Q3: What is Hypothesis testing? Why is it used? State the importance of Hypothesis testing.
+Hypothesis testing is a statistical method used to make inferences about population parameters based on sample data. It involves formulating a null hypothesis and an alternative hypothesis, collecting sample data, and calculating a test statistic to determine the likelihood of the sample data under the null hypothesis. The test statistic is then compared to a critical value or p-value to decide whether to reject or fail to reject the null hypothesis.
+
+Hypothesis testing is used to help make decisions and draw conclusions about population parameters based on sample data. For example, a company may want to test whether a new advertising campaign has increased sales. They could collect data on sales before and after the campaign and use hypothesis testing to determine whether there is a statistically significant difference in sales. Hypothesis testing can also be used to test scientific theories and validate experimental results.
+
+The importance of hypothesis testing lies in its ability to provide a structured and objective method for making inferences about population parameters based on sample data. By using hypothesis testing, we can avoid making conclusions based on subjective opinions or incomplete information. Hypothesis testing allows us to make decisions based on statistical evidence and quantify the level of uncertainty in our conclusions. Additionally, hypothesis testing provides a framework for testing competing hypotheses and selecting the best one based on the available evidence.
+
+Q4. Create a hypothesis that states whether the average weight of male college students is greater than the average weight of female college students.
+The null hypothesis for this hypothesis test would be:
+
+H0: The average weight of male college students is equal to or less than the average weight of female college students.
+
+The alternative hypothesis would be:
+
+Ha: The average weight of male college students is greater than the average weight of female college students.
+
+We can represent these hypotheses symbolically as:
+
+H0: μm ≤ μf
+
+Ha: μm > μf
+
+where μm represents the population mean weight of male college students and μf represents the population mean weight of female college students.
+
+We can then collect a sample of male and female college students and use statistical methods, such as a t-test or z-test, to test whether there is sufficient evidence to reject the null hypothesis in favor of the alternative hypothesis.
+
+Q5. Write a Python script to conduct a hypothesis test on the difference between two population means, given a sample from each population.
+
+import numpy as np
+from scipy.stats import ttest_ind
+
+# Generate random sample data for two populations
+np.random.seed(123)
+population1 = np.random.normal(loc=10, scale=2, size=100)
+population2 = np.random.normal(loc=12, scale=2, size=100)
+
+# Calculate sample statistics
+sample1 = population1[:50]
+sample2 = population2[:50]
+mean1 = np.mean(sample1)
+mean2 = np.mean(sample2)
+std1 = np.std(sample1, ddof=1)
+std2 = np.std(sample2, ddof=1)
+n1 = len(sample1)
+n2 = len(sample2)
+
+# Calculate test statistic and p-value
+t, p = ttest_ind(sample1, sample2, equal_var=False)
+
+# Print results
+print("Sample 1: mean={}, std={}, size={}".format(mean1, std1, n1))
+print("Sample 2: mean={}, std={}, size={}".format(mean2, std2, n2))
+print("Test statistic: t={}".format(t))
+print("p-value: p={}".format(p))
+if p < 0.05:
+    print("Reject the null hypothesis that the means are equal.")
+else:
+    print("Fail to reject the null hypothesis that the means are equal.")
+
+     
+Sample 1: mean=10.02654288216757, std=2.4034010252957856, size=50
+Sample 2: mean=12.238327671201723, std=2.035440524607091, size=50
+Test statistic: t=-4.9657649739156655
+p-value: p=2.993602330559806e-06
+Reject the null hypothesis that the means are equal.
+Q6: What is a null and alternative hypothesis? Give some examples.
+The null hypothesis is a statement that assumes that there is no difference or no effect between the populations being compared. In other words, any observed difference or effect is simply due to chance or sampling error. The alternative hypothesis, on the other hand, is a statement that assumes that there is a difference or an effect between the populations being compared. The alternative hypothesis can be one-sided, indicating that the difference or effect is in a specific direction, or two-sided, indicating that the difference or effect can be in either direction.
+
+Example of a one-sample hypothesis test:
+
+Null hypothesis: The mean weight of a certain brand of apples is 200 grams.
+Alternative hypothesis: The mean weight of a certain brand of apples is not 200 grams.
+Example of a two-sample hypothesis test:
+
+Null hypothesis: The mean cholesterol level in men and women is the same.
+Alternative hypothesis: The mean cholesterol level in men is different from the mean cholesterol level in women.
+Q7: Write down the steps involved in hypothesis testing.
+The steps involved in hypothesis testing are as follows:
+
+Formulate the null hypothesis and alternative hypothesis based on the research question and the population parameter of interest.
+
+Choose an appropriate level of significance, typically denoted as alpha (α), which represents the probability of rejecting the null hypothesis when it is actually true.
+
+Select a sample from the population and calculate the test statistic, which is a measure of how far the sample statistic (e.g., mean, proportion) is from the hypothesized value under the null hypothesis.
+
+Calculate the p-value, which is the probability of observing a test statistic as extreme as or more extreme than the one calculated from the sample, assuming that the null hypothesis is true.
+
+Compare the p-value with the level of significance. If the p-value is less than the level of significance, reject the null hypothesis in favor of the alternative hypothesis. If the p-value is greater than or equal to the level of significance, fail to reject the null hypothesis.
+
+Interpret the results in the context of the research question and draw conclusions. If the null hypothesis is rejected, it means that there is evidence to support the alternative hypothesis, and vice versa. However, it is important to keep in mind that hypothesis testing does not prove anything conclusively, but rather provides evidence to support or reject a hypothesis with a certain degree of confidence.
+
+Report the findings and limitations of the hypothesis test, including the sample size, test statistic, p-value, level of significance, and any assumptions made in the analysis.
+
+Q8. Define p-value and explain its significance in hypothesis testing.
+In hypothesis testing, the p-value is the probability of observing a test statistic as extreme as or more extreme than the one calculated from the sample, assuming that the null hypothesis is true. The p-value measures the strength of evidence against the null hypothesis and provides a quantitative measure of the likelihood that the null hypothesis is true.
+
+Significance
+
+It is used to make a decision about whether to reject or fail to reject the null hypothesis.
+The p-value is compared to the level of significance, which is typically denoted as alpha (α), and represents the maximum probability of rejecting the null hypothesis when it is actually true.
+If the p-value is less than or equal to alpha, we reject the null hypothesis in favor of the alternative hypothesis.
+If the p-value is greater than alpha, we fail to reject the null hypothesis.
+Q9. Generate a Student's t-distribution plot using Python's matplotlib library, with the degrees of freedom parameter set to 10.
+
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.stats import t
+
+df = 10  # degrees of freedom
+x = np.linspace(t.ppf(0.001, df), t.ppf(0.999, df), 100)  # range of x values
+y = t.pdf(x, df)  # probability density function values at each x value
+
+plt.plot(x, y)
+plt.title("Student's t-distribution with df=10")
+plt.xlabel('x')
+plt.ylabel('PDF')
+plt.show()
+
+     
+
+Q10. Write a Python program to calculate the two-sample t-test for independent samples, given two random samples of equal size and a null hypothesis that the population means are equal.
+
+import numpy as np
+from scipy.stats import ttest_ind
+
+# Generate two random samples of equal size
+n = 50
+sample1 = np.random.normal(loc=10, scale=2, size=n)
+sample2 = np.random.normal(loc=11, scale=2, size=n)
+
+# Perform two-sample t-test assuming equal variances
+t_statistic, p_value = ttest_ind(sample1, sample2, equal_var=True)
+
+# Print the results
+print('Sample 1 mean:', np.mean(sample1))
+print('Sample 2 mean:', np.mean(sample2))
+print('t-statistic:', t_statistic)
+print('p-value:', p_value)
+
+     
+Sample 1 mean: 9.763545362561942
+Sample 2 mean: 10.85592939248017
+t-statistic: -2.7894817308536175
+p-value: 0.0063441079485912835
+Q11: What is Student’s t distribution? When to use the t-Distribution.
+Student's t-distribution is a probability distribution that is used in statistical inference to estimate population parameters when the sample size is small (typically less than 30) or when the population variance is unknown. The t-distribution is a family of distributions that is similar in shape to the standard normal distribution but has heavier tails, which means that it assigns more probability mass to extreme values.
+
+The t-distribution is used in:-
+
+* statistical inference to calculate confidence intervals and perform hypothesis tests for population means, particularly when the sample size is small or the population variance is unknown. 
+
+* Instead of the standard normal distribution when the sample size is small because the sample mean and the sample standard deviation tend to have more variability than their population counterparts, and this variability needs to be accounted for in the probability distribution.
+Q12: What is t-statistic? State the formula for t-statistic.
+The t-statistic is a test statistic used in hypothesis testing to determine whether the difference between two sample means is significant, given the variability of the samples and assuming that the population variances are equal. The t-statistic measures the difference between the two sample means in units of the standard error of the difference.
+
+FORMULA:-
+t = (x̄₁ - x̄₂) / (s_p * sqrt(1/n₁ + 1/n₂))
+
+where:
+
+x̄₁ and x̄₂ are the sample means of the two groups being compared
+
+s_p is the pooled standard error of the mean, calculated as:
+
+s_p = sqrt(((n₁ - 1) * s₁² + (n₂ - 1) * s₂²) / (n₁ + n₂ - 2))
+
+where s₁ and s₂ are the sample standard deviations of the two groups, and n₁ and n₂ are the sample sizes of the two groups.
+
+Q13. A coffee shop owner wants to estimate the average daily revenue for their shop. They take a random sample of 50 days and find the sample mean revenue to be 
+50. Estimate the population mean revenue with a 95% confidence interval.
+Confidence Interval = sample mean ± (critical value) * (standard error)
+
+we have a sample size of n = 50, a sample mean of x̄ = 
+50. We want to estimate the population mean revenue with a 95% confidence interval, so the level of significance is α = 0.05 and the degrees of freedom are (n-1) = 49.
+
+The critical value for a two-tailed t-test with 49 degrees of freedom and a significance level of 0.05 is approximately 2.009 (we can use a t-distribution table or the tinv function in Python). The standard error can be estimated as s/√n = 
+7.07.
+
+Substituting the values into the formula, we get:
+
+Confidence Interval = 
+7.07
+
+Confidence Interval = [
+514.92]
+
+Q14. A researcher hypothesizes that a new drug will decrease blood pressure by 10 mmHg. They conduct a clinical trial with 100 patients and find that the sample mean decrease in blood pressure is 8 mmHg with a standard deviation of 3 mmHg. Test the hypothesis with a significance level of 0.05.
+To test the hypothesis that the new drug decreases blood pressure by 10 mmHg with a significance level of 0.05, we can use a one-sample t-test. The null and alternative hypotheses are:
+
+H0: The true population mean decrease in blood pressure is 10 mmHg. Ha: The true population mean decrease in blood pressure is less than 10 mmHg.
+
+We can calculate the test statistic t as:
+
+t = (sample mean - hypothesized mean) / (standard error)
+
+where the sample mean is the mean decrease in blood pressure from the 100 patients, the hypothesized mean is 10 mmHg, and the standard error is the standard deviation of the sample mean, which is the sample standard deviation divided by the square root of the sample size.
+
+Substituting the values, we get:
+
+t = (8 - 10) / (3 / sqrt(100)) t = -4.47
+
+Using a t-distribution table or the t.cdf() function in Python, we can calculate the p-value for this test. Since the alternative hypothesis is one-sided (we are only interested in whether the true population mean decrease is less than 10 mmHg), we calculate the p-value as the area under the t-distribution curve to the left of the calculated t-value:
+
+p-value = t.cdf(-4.47, df=99) p-value = 0.000007
+
+The p-value is very small (less than the significance level of 0.05), which means we can reject the null hypothesis and conclude that the new drug does decrease blood pressure by more than 10 mmHg at a significance level of 0.05.
+
+Q15. An electronics company produces a certain type of product with a mean weight of 5 pounds and a standard deviation of 0.5 pounds. A random sample of 25 products is taken, and the sample mean weight is found to be 4.8 pounds. Test the hypothesis that the true mean weight of the products is less than 5 pounds with a significance level of 0.01.
+To test the hypothesis that the true mean weight of the products is less than 5 pounds with a significance level of 0.01, we can use a one-sample t-test. The null and alternative hypotheses are:
+
+H0: The true population mean weight is 5 pounds. Ha: The true population mean weight is less than 5 pounds.
+
+We can calculate the test statistic t as:
+
+t = (sample mean - hypothesized mean) / (standard error)
+
+where the sample mean is the mean weight of the 25 products, the hypothesized mean is 5 pounds, and the standard error is the standard deviation of the sample mean, which is the sample standard deviation divided by the square root of the sample size.
+
+Substituting the values, we get:
+
+t = (4.8 - 5) / (0.5 / sqrt(25)) t = -2
+
+Using a t-distribution table or the t.cdf() function in Python, we can calculate the p-value for this test. Since the alternative hypothesis is one-sided (we are only interested in whether the true population mean weight is less than 5 pounds), we calculate the p-value as the area under the t-distribution curve to the left of the calculated t-value:
+
+p-value = t.cdf(-2, df=24) p-value = 0.025
+
+The p-value is greater than the significance level of 0.01, which means we cannot reject the null hypothesis and conclude that there is not enough evidence to support the claim that the true mean weight of the products is less than 5 pounds at a significance level of 0.01.
+
+Q16. Two groups of students are given different study materials to prepare for a test. The first group (n1 = 30) has a mean score of 80 with a standard deviation of 10, and the second group (n2 = 40) has a mean score of 75 with a standard deviation of 8. Test the hypothesis that the population means for the two groups are equal with a significance level of 0.01.
+o test the hypothesis that the population means for the two groups are equal with a significance level of 0.01, we can use a two-sample t-test for independent samples. The null and alternative hypotheses are:
+
+H0: The population means for the two groups are equal. Ha: The population means for the two groups are not equal.
+
+We can calculate the test statistic t as:
+
+t = (sample mean difference - hypothesized difference) / (standard error of the difference)
+
+where the sample mean difference is the difference between the two sample means (80 - 75 = 5), the hypothesized difference is 0 (since the null hypothesis assumes the population means are equal), and the standard error of the difference is calculated using the formula:
+
+standard error of the difference = sqrt((s1^2 / n1) + (s2^2 / n2))
+
+where s1 and s2 are the sample standard deviations for the two groups, and n1 and n2 are the sample sizes.
+
+Substituting the values, we get:
+
+standard error of the difference = sqrt((10^2 / 30) + (8^2 / 40)) standard error of the difference = 2.438
+
+t = (5 - 0) / 2.438 t = 2.049
+
+Using a t-distribution table or the t.cdf() function in Python, we can calculate the two-tailed p-value for this test. Since the significance level is 0.01, the rejection region is split between the left tail and the right tail of the t-distribution, with each tail containing 0.005 of the area.
+
+p-value = 2 * (1 - t.cdf(abs(t), df=68)) p-value = 0.044
+
+The p-value is greater than the significance level of 0.01, which means we cannot reject the null hypothesis and conclude that there is not enough evidence to support the claim that the population means for the two groups are different at a significance level of 0.01.
+
+Q17. A marketing company wants to estimate the average number of ads watched by viewers during a TV program. They take a random sample of 50 viewers and find that the sample mean is 4 with a standard deviation of 1.5. Estimate the population mean with a 99% confidence interval.
+To estimate the population mean with a 99% confidence interval, we can use the following formula:
+
+Confidence interval = sample mean ± (t-value)*(standard error)
+
+where t-value is the critical value of the t-distribution for a given level of confidence and degrees of freedom, and the standard error is the standard deviation of the sample mean.
+
+
+from scipy.stats import t
+t_value = t.ppf(0.995, 49)
+
+     
+
+import math
+sample_mean = 4
+sample_std = 1.5
+std_error = sample_std / math.sqrt(50)
+
+     
+
+lower_bound = sample_mean - t_value * std_error
+upper_bound = sample_mean + t_value * std_error
+print("The 99% confidence interval for the population mean is:", (lower_bound, upper_bound))
+
+     
+The 99% confidence interval for the population mean is: (3.4314963358572577, 4.568503664142742)
+Therefore, we can be 99% confident that the true population mean of the number of ads watched by viewers during a TV program is between 3.4 and 4.6.
